@@ -1,0 +1,52 @@
+package edu.curso;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+public class Calculadora extends Application {
+
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		BorderPane painelPrincipal = new BorderPane();
+		FlowPane painelDisplay = new FlowPane();
+		GridPane painelBotoes = new GridPane();
+		painelDisplay.setHgap(20);
+		TextField txtDisplay = new TextField();
+		txtDisplay.setPrefWidth(300);
+		Button btnCE = new Button("CE");
+		btnCE.setPrefWidth(40);
+		btnCE.setPrefHeight(40);
+		painelDisplay.getChildren().addAll(txtDisplay, btnCE);
+		painelBotoes.setHgap(5);
+		painelBotoes.setVgap(5);
+
+		String[] nomes = { "7", "8", "9", "+",
+						   "4", "5", "6", "-",
+						   "1", "2", "3", "*",
+						   ",", "0", "=", "/", };
+		for (int i = 0; i < 16; i++) {
+			Button btn = new Button(nomes[i]);
+			int row = i / 4;
+			int col = i % 4;
+			btn.setPrefWidth(40);
+			btn.setPrefHeight(40);
+			painelBotoes.add(btn, col, row);
+		}
+		painelPrincipal.setTop(painelDisplay);
+		painelPrincipal.setCenter(painelBotoes);
+		Scene scn = new Scene(painelPrincipal);
+		stage.setScene(scn);
+		stage.show();
+
+	}
+}
