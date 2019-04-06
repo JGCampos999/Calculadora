@@ -1,6 +1,8 @@
 package edu.curso;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -30,10 +32,7 @@ public class Calculadora extends Application {
 		painelBotoes.setHgap(5);
 		painelBotoes.setVgap(5);
 
-		String[] nomes = { "7", "8", "9", "+",
-						   "4", "5", "6", "-",
-						   "1", "2", "3", "*",
-						   ",", "0", "=", "/", };
+		String[] nomes = { "7", "8", "9", "+", "4", "5", "6", "-", "1", "2", "3", "*", ",", "0", "=", "/", };
 		for (int i = 0; i < 16; i++) {
 			Button btn = new Button(nomes[i]);
 			int row = i / 4;
@@ -41,6 +40,17 @@ public class Calculadora extends Application {
 			btn.setPrefWidth(40);
 			btn.setPrefHeight(40);
 			painelBotoes.add(btn, col, row);
+			btn.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent e) {
+					Button b = (Button) e.getTarget();
+					if (Character.isDigit(b.getText().charAt(0))) {
+						txtDisplay.setText(txtDisplay.getText() + b.getText());
+					}
+
+				}
+			});
 		}
 		painelPrincipal.setTop(painelDisplay);
 		painelPrincipal.setCenter(painelBotoes);
