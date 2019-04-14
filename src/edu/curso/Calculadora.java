@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 public class Calculadora extends Application {
 	double Elem = 0;
 	double Total = 0;
-	int ContDigi = 0;
-	String Op;
+	int ContDigiA = 0;
+	String Op = "";
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -38,6 +38,8 @@ public class Calculadora extends Application {
 			public void handle(ActionEvent event) {
 				Total = 0;
 				Elem = 0;
+				Op = "";
+				ContDigiA = 0;
 				txtDisplay.setText("");
 			}
 
@@ -63,41 +65,66 @@ public class Calculadora extends Application {
 						txtDisplay.setText(txtDisplay.getText() + b.getText());
 						String s = Character.toString(b.getText().charAt(0));
 						Elem = ((Elem * 10) + Integer.parseInt(s));
+						if (txtDisplay.getText().contains(",")) {
+							ContDigiA++;
+						}
 					} else if (b.getText().charAt(0) == nomes[3].charAt(0)) {
 						Op = nomes[3];
+						if (txtDisplay.getText().contains(",")) {
+							Elem = Elem / (Math.pow(10, ContDigiA));
+						}
 						Total = Elem;
 						Elem = 0;
 						txtDisplay.setText("");
+						ContDigiA = 0;
 					} else if (b.getText().charAt(0) == nomes[7].charAt(0)) {
 						Op = nomes[7];
+						if (txtDisplay.getText().contains(",")) {
+							Elem = Elem / (Math.pow(10, ContDigiA));
+						}
 						Total = Elem;
 						Elem = 0;
 						txtDisplay.setText("");
+						ContDigiA = 0;
 					} else if (b.getText().charAt(0) == nomes[11].charAt(0)) {
 						Op = nomes[11];
+						if (txtDisplay.getText().contains(",")) {
+							Elem = Elem / (Math.pow(10, ContDigiA));
+						}
 						Total = Elem;
 						Elem = 0;
 						txtDisplay.setText("");
+						ContDigiA = 0;
 					} else if (b.getText().charAt(0) == nomes[12].charAt(0)) {
 						if (!txtDisplay.getText().contains(",")) {
 							txtDisplay.setText(txtDisplay.getText() + b.getText());
 						}
 					} else if (b.getText().charAt(0) == nomes[15].charAt(0)) {
 						Op = nomes[15];
+						if (txtDisplay.getText().contains(",")) {
+							Elem = Elem / (Math.pow(10, ContDigiA));
+						}
 						Total = Elem;
 						Elem = 0;
-					} else if (txtDisplay.getText().contains(",")) {
-						
-					}
-					else {
-						if (Op.contains("+")) {
-							Total = Elem + Total;
-						} else if (Op.contains("-")) {
-							Total = Total - Elem;
-						} else if (Op.contains("*")) {
-							Total = Elem * Total;
+						txtDisplay.setText("");
+						ContDigiA = 0;
+					} else {
+						if (Op.equals("")) {
+							Total = Elem;
 						} else {
-							Total = Total / Elem;
+							if (txtDisplay.getText().contains(",")) {
+								Elem = Elem / (Math.pow(10, ContDigiA));
+							}
+							if (Op.equals("+")) {
+								Total = Elem + Total;
+							} else if (Op.equals("-")) {
+								Total = Total - Elem;
+							} else if (Op.equals("*")) {
+								Total = Elem * Total;
+							} else {
+								Total = Total / Elem;
+							}
+							Op = "";
 						}
 						if (Total % 1 == 0) {
 							txtDisplay.setText("" + Math.round(Total));
